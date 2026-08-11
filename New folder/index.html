@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Agronomy AI - Multi-Tenant Real-time agronomic advisory, camera vision diagnosis, climate resilience, land profile, and smart crop recommendations.">
+  <meta name="keywords"
+    content="Agriculture AI, Crop Disease Diagnosis, India Agronomy, Crop Recommendation, Farmer Livelihood, Climate Resilience">
+  <title>Agronomy AI | Farmer Gateway & Agronomic Dashboard</title>
+
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+
+<body>
+
+  <!-- ===================================================================
+       1. AUTHENTICATION LANDING GATEWAY SCREEN (Shown First When Logged Out)
+       =================================================================== -->
+  <div id="authGatewayScreen" class="auth-gateway-wrapper">
+
+    <div style="text-align:center; margin-bottom:1.5rem;">
+      <div
+        style="width:56px; height:56px; border-radius:16px; background:linear-gradient(135deg, var(--primary-600), var(--primary-400)); display:inline-flex; align-items:center; justify-content:center; color:#fff; box-shadow:0 0 25px rgba(16, 185, 129, 0.4); margin-bottom:0.75rem;">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M12 2a10 10 0 0 1 10 10c0 5.5-4.5 10-10 10S2 17.5 2 12A10 10 0 0 1 12 2z" />
+          <path d="M12 6v12" />
+          <path d="M8 10l4-4 4 4" />
+        </svg>
+      </div>
+      <h1
+        style="font-size: 2.2rem; font-weight: 800; background: linear-gradient(135deg, #ffffff 30%, var(--primary-300) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        Agronomy AI
+      </h1>
+      <p style="color:var(--text-muted); font-size:0.95rem; max-width:440px; margin:0.3rem auto 0 auto;">
+        Real-time agronomic advisory, live weather signals, camera crop diagnosis, and smart rotation recommendations.
+      </p>
+    </div>
+
+    <!-- Central Auth Container Card -->
+    <div class="auth-gateway-card">
+      <div class="auth-card-header">
+        <h3 style="font-size:1.15rem; font-weight:700;">Farmer Login & Device Gateway</h3>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.2rem;">Sign in or create a free farm account
+          to access your isolated dashboard</p>
+      </div>
+
+      <!-- Auth Navigation Tabs -->
+      <div class="auth-tabs-nav">
+        <button id="tabSignIn" class="auth-tab-btn active">🔑 Sign In</button>
+        <button id="tabRegister" class="auth-tab-btn">📝 Register Account</button>
+      </div>
+
+      <!-- AUTH BODY: SIGN IN FORM -->
+      <div id="formSignInBody" class="auth-card-body">
+        <div class="form-group" style="margin-bottom:0.85rem;">
+          <label>Mobile Number / Username:</label>
+          <input type="text" id="gatewayPhoneInput" placeholder="Enter Mobile Number (e.g. 9876543210)"
+            value="9876543210">
+        </div>
+
+        <div class="form-group" style="margin-bottom:1.25rem;">
+          <label>Password / PIN Code:</label>
+          <input type="password" id="gatewayPassInput" placeholder="••••••••" value="123456">
+        </div>
+
+        <button id="gatewaySignInBtn" class="btn-primary" style="width:100%; padding:0.85rem;">
+          <span>Sign In & Open Farm Dashboard</span>
+        </button>
+
+        <div style="text-align:center; margin:1.25rem 0 0.75rem 0; font-size:0.75rem; color:var(--text-muted);">
+          — OR SELECT A DEMO FARMER ACCOUNT —
+        </div>
+
+        <div class="demo-account-chips-grid">
+          <div class="demo-farmer-chip" data-demo-id="user_ramesh" data-phone="9876543210" data-name="Ramesh Patel">
+            <div>
+              <strong style="font-size:0.88rem; display:block;">👨‍🌾 Ramesh Patel</strong>
+              <span style="font-size:0.75rem; color:var(--text-muted);">Nashik, Maharashtra • 5.0 Acres Cotton</span>
+            </div>
+            <span class="hero-pill" style="font-size:0.65rem;">DEMO LOGIN</span>
+          </div>
+
+          <div class="demo-farmer-chip" data-demo-id="user_sunita" data-phone="9812345678" data-name="Sunita Devi">
+            <div>
+              <strong style="font-size:0.88rem; display:block;">👩‍🌾 Sunita Devi</strong>
+              <span style="font-size:0.75rem; color:var(--text-muted);">Ludhiana, Punjab • 12.5 Acres Wheat &
+                Paddy</span>
+            </div>
+            <span class="hero-pill" style="font-size:0.65rem;">DEMO LOGIN</span>
+          </div>
+
+          <div class="demo-farmer-chip" data-demo-id="user_ankit" data-phone="9988776655" data-name="Ankit Sharma">
+            <div>
+              <strong style="font-size:0.88rem; display:block;">👨‍🌾 Ankit Sharma</strong>
+              <span style="font-size:0.75rem; color:var(--text-muted);">Varanasi, UP • 8.0 Acres Sugarcane</span>
+            </div>
+            <span class="hero-pill" style="font-size:0.65rem;">DEMO LOGIN</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AUTH BODY: REGISTER NEW FARMER ACCOUNT FORM (Hidden by default) -->
+      <div id="formRegisterBody" class="auth-card-body" style="display:none;">
+        <div class="form-group" style="margin-bottom:0.75rem;">
+          <label>Farmer Full Name:</label>
+          <input type="text" id="regNameInput" placeholder="e.g. Vikram Singh / Priya Sharma">
+        </div>
+
+        <div class="form-group" style="margin-bottom:0.75rem;">
+          <label>Mobile Number:</label>
+          <input type="tel" id="regPhoneInput" placeholder="+91 98765 43210">
+        </div>
+
+        <div class="farm-config-grid" style="margin-bottom:0.75rem;">
+          <div class="form-group">
+            <label>Farm District & State:</label>
+            <input type="text" id="regLocationInput" placeholder="e.g. Karnal, Haryana" value="Karnal, Haryana">
+          </div>
+
+          <div class="form-group">
+            <label>Land Size & Unit:</label>
+            <div style="display:flex; gap:0.3rem;">
+              <input type="number" id="regLandSizeInput" value="6.0" step="0.5" style="width:65%;">
+              <select id="regLandUnitInput" style="width:35%; padding:0.3rem;">
+                <option value="Acres">Acres</option>
+                <option value="Hectares">Hectares</option>
+                <option value="Bigha">Bigha</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Soil Type:</label>
+            <select id="regSoilSelect">
+              <option value="Alluvial Soil">Alluvial Soil</option>
+              <option value="Black Cotton Soil">Black Cotton Soil</option>
+              <option value="Red Loam">Red Loam Soil</option>
+              <option value="Clay Soil">Clay Heavy Soil</option>
+              <option value="Sandy Soil">Sandy Loam</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Current Crop:</label>
+            <select id="regCropSelect">
+              <option value="Wheat">Wheat</option>
+              <option value="Paddy Rice">Paddy Rice</option>
+              <option value="Cotton">Cotton</option>
+              <option value="Sugarcane">Sugarcane</option>
+              <option value="Maize">Maize / Corn</option>
+              <option value="Red Chilli">Red Chilli</option>
+            </select>
+          </div>
+        </div>
+
+        <button id="gatewayRegisterBtn" class="btn-primary" style="width:100%; padding:0.85rem;">
+          <span>Register Account & Enter Dashboard</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ===================================================================
+       2. MAIN FARM DASHBOARD SCREEN (Shown ONLY After Successful Login)
+       =================================================================== -->
+  <div id="appDashboardScreen" style="display:none;">
+
+    <!-- Site Header Navigation -->
+    <header class="site-header">
+      <div class="header-container">
+        <div class="brand-logo">
+          <div class="logo-icon-wrapper">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2a10 10 0 0 1 10 10c0 5.5-4.5 10-10 10S2 17.5 2 12A10 10 0 0 1 12 2z" />
+              <path d="M12 6v12" />
+              <path d="M8 10l4-4 4 4" />
+            </svg>
+          </div>
+          <div class="logo-text">
+            <h1>Agronomy AI</h1>
+          </div>
+          <span class="logo-badge">Farm Dashboard</span>
+        </div>
+
+        <div class="header-controls">
+          <!-- Logged in Active Farmer Profile Badge -->
+          <div id="headerUserBadge"
+            style="display:flex; align-items:center; gap:0.5rem; background:rgba(16, 185, 129, 0.15); border:1px solid rgba(16, 185, 129, 0.3); padding:0.4rem 0.8rem; border-radius:var(--radius-sm);">
+            <div
+              style="width:24px; height:24px; border-radius:50%; background:var(--primary-600); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:bold;">
+              👨‍🌾</div>
+            <div style="display:flex; flex-direction:column;">
+              <span id="headerFarmerName" style="font-size:0.82rem; font-weight:700; color:var(--primary-300);">Ramesh
+                Patel</span>
+              <span id="headerFarmerDetails" style="font-size:0.68rem; color:var(--text-muted);">Nashik • 5.0
+                Acres</span>
+            </div>
+          </div>
+
+          <!-- Multilingual Speech Voice Select -->
+          <div style="display:flex; align-items:center; gap:0.3rem;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary-400)" stroke-width="2">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+            </svg>
+            <select id="voiceLangSelect" class="select-pill" title="Select Voice Audio Language">
+              <option value="hi-IN">Hindi (हिंदी)</option>
+              <option value="mr-IN">Marathi (मराठी)</option>
+              <option value="pa-IN">Punjabi (ਪੰਜਾਬੀ)</option>
+              <option value="te-IN">Telugu (తెలుగు)</option>
+              <option value="ta-IN">Tamil (தமிழ்)</option>
+              <option value="bn-IN">Bengali (বাংলা)</option>
+              <option value="gu-IN">Gujarati (ગુજરાતી)</option>
+              <option value="en-US">English (US)</option>
+              <option value="sw-KE">Swahili (Kiswahili)</option>
+              <option value="es-ES">Spanish (Español)</option>
+              <option value="fr-FR">French (Français)</option>
+            </select>
+          </div>
+
+          <!-- Field Scan History Toggle -->
+          <button id="historyBtn" class="control-btn" title="View Field History Log">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 8v4l3 3" />
+              <circle cx="12" cy="12" r="9" />
+            </svg>
+            <span>History</span>
+            <span id="historyBadgeCount"
+              style="background:var(--primary-600); color:#fff; font-size:0.7rem; padding:1px 6px; border-radius:10px;">0</span>
+          </button>
+
+          <!-- Printable Report Button -->
+          <button id="printReportBtn" class="control-btn" title="Export Printable Advisory Report">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 6 2 18 2 18 9" />
+              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+              <rect x="6" y="14" width="12" height="8" />
+            </svg>
+            <span>Report</span>
+          </button>
+
+          <!-- Dark / Light Theme Toggle -->
+          <button id="themeToggleBtn" class="control-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5" />
+              <path
+                d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+            </svg>
+            <span>Dark</span>
+          </button>
+
+          <!-- Logout Button -->
+          <button id="headerLogoutBtn" class="control-btn"
+            style="color:var(--accent-red); border-color:rgba(239, 68, 68, 0.3);" title="Logout to Gateway Screen">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+            <span>Logout</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Application Wrapper -->
+    <main class="main-wrapper">
+
+      <!-- Hero Banner & Active Farm Summary -->
+      <section class="hero-banner glass-panel">
+        <div class="hero-info">
+          <h2>Real-Time Agronomic Advisory & Smart Crop Recommendation</h2>
+          <p>Diagnose crop leaf diseases via live camera or photo, optimize spray safety windows with Open-Meteo
+            weather, and receive AI crop rotation recommendations tailored to your land and local currency.</p>
+
+          <div id="farmSummaryDisplay" class="hero-pills"
+            style="margin-top:0.75rem; background:rgba(16, 185, 129, 0.1); padding:0.4rem 0.8rem; border-radius:8px; border:1px solid rgba(16, 185, 129, 0.25);">
+            Loading active farm profile...
+          </div>
+        </div>
+      </section>
+
+      <!-- Core 2-Column Dashboard Layout -->
+      <div class="dashboard-grid">
+
+        <!-- LEFT COLUMN: UNSTRUCTURED INPUTS, WEATHER SIGNALS & FARM PROFILE -->
+        <div class="input-column">
+
+          <!-- 1. AI Crop Leaf Scanner & Live Camera Card -->
+          <section class="glass-panel">
+            <div class="panel-header">
+              <div class="panel-title">
+                <svg width="20" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                  <polyline points="14 2 14 8 20 8" />
+                </svg>
+                <span>1. AI Crop Leaf Scanner</span>
+              </div>
+              <span style="font-size:0.75rem; color:var(--text-muted);">Photo & Live Camera</span>
+            </div>
+
+            <div class="panel-body">
+              <!-- Dropzone Box -->
+              <div id="leafDropzone" class="dropzone-container">
+                <div class="dropzone-icon">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="17 8 12 3 7 8" />
+                    <line x1="12" y1="3" x2="12" y2="15" />
+                  </svg>
+                </div>
+                <div class="dropzone-title">Upload Diseased Leaf Photo</div>
+                <div class="dropzone-sub">Drag & drop photo or click to browse</div>
+                <input type="file" id="leafFileInput" class="hidden-file-input" accept="image/*">
+              </div>
+
+              <!-- Live Camera Button -->
+              <div class="scanner-actions-bar">
+                <button id="openCamBtn" class="btn-primary" style="width:100%;" title="Open Device Camera Snapshot">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                    <circle cx="12" cy="13" r="4" />
+                  </svg>
+                  <span>Take Live Camera Snapshot</span>
+                </button>
+              </div>
+
+              <!-- Preview Box with Scanner Laser -->
+              <div id="imagePreviewWrapper" class="image-preview-wrapper">
+                <img id="imagePreviewImg" class="image-preview-img" src="" alt="Diseased Crop Preview">
+                <div class="scan-overlay-reticle"></div>
+                <div class="scan-line"></div>
+                <div class="preview-actions">
+                  <button id="resetImageBtn" class="icon-btn-sm" title="Remove Photo">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <line x1="18" y1="6" x2="6" y2="18" />
+                      <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Preset Samples Gallery -->
+              <div class="preset-samples-title">Or Select Crop Disease Preset Sample:</div>
+              <div class="preset-chips-grid">
+                <div class="preset-chip" data-preset-id="cotton_leaf_curl"
+                  data-img-src="assets/samples/cotton_leaf_curl_1786425088550.png">
+                  <img src="assets/samples/cotton_leaf_curl_1786425088550.png" alt="Cotton Leaf Curl"
+                    class="preset-chip-img">
+                  <div class="preset-chip-info">
+                    <span class="preset-chip-name">Cotton Leaf Curl</span>
+                    <span class="preset-chip-crop">Gujarat / MH</span>
+                  </div>
+                </div>
+
+                <div class="preset-chip" data-preset-id="sugarcane_red_rot"
+                  data-img-src="assets/samples/sugarcane_red_rot_1786425111127.png">
+                  <img src="assets/samples/sugarcane_red_rot_1786425111127.png" alt="Sugarcane Red Rot"
+                    class="preset-chip-img">
+                  <div class="preset-chip-info">
+                    <span class="preset-chip-name">Sugarcane Red Rot</span>
+                    <span class="preset-chip-crop">UP / Karnataka</span>
+                  </div>
+                </div>
+
+                <div class="preset-chip" data-preset-id="tomato_late_blight"
+                  data-img-src="assets/samples/tomato_late_blight_1786423427645.png">
+                  <img src="assets/samples/tomato_late_blight_1786423427645.png" alt="Tomato Late Blight"
+                    class="preset-chip-img">
+                  <div class="preset-chip-info">
+                    <span class="preset-chip-name">Tomato Blight</span>
+                    <span class="preset-chip-crop">Fungal Pathogen</span>
+                  </div>
+                </div>
+
+                <div class="preset-chip" data-preset-id="maize_armyworm"
+                  data-img-src="assets/samples/maize_armyworm_1786423443154.png">
+                  <img src="assets/samples/maize_armyworm_1786423443154.png" alt="Maize Armyworm"
+                    class="preset-chip-img">
+                  <div class="preset-chip-info">
+                    <span class="preset-chip-name">Maize Armyworm</span>
+                    <span class="preset-chip-crop">Pest Infestation</span>
+                  </div>
+                </div>
+
+                <div class="preset-chip" data-preset-id="rice_blight"
+                  data-img-src="assets/samples/rice_blight_1786423462429.png">
+                  <img src="assets/samples/rice_blight_1786423462429.png" alt="Paddy Rice Blight"
+                    class="preset-chip-img">
+                  <div class="preset-chip-info">
+                    <span class="preset-chip-name">Paddy Blight</span>
+                    <span class="preset-chip-crop">Bacterial Disease</span>
+                  </div>
+                </div>
+
+                <div class="preset-chip" data-preset-id="healthy_crop"
+                  data-img-src="assets/samples/tomato_late_blight_1786423427645.png">
+                  <div class="preset-chip-img"
+                    style="background:var(--primary-600); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:0.8rem;">
+                    🌿</div>
+                  <div class="preset-chip-info">
+                    <span class="preset-chip-name">Healthy Canopy</span>
+                    <span class="preset-chip-crop">Normal Baseline</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 2. Live Location Signals & Search Card -->
+          <section class="glass-panel">
+            <div class="panel-header">
+              <div class="panel-title">
+                <svg width="20" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
+                </svg>
+                <span>2. Location & Live Weather Signals</span>
+              </div>
+              <button id="gpsLocateBtn" class="control-btn" style="padding:0.25rem 0.6rem; font-size:0.75rem;"
+                title="Auto-Detect GPS & District">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <polygon points="12 2 15 9 22 12 15 15 12 22 9 15 2 12 9 9 12 2" />
+                </svg>
+                <span>Auto GPS</span>
+              </button>
+            </div>
+
+            <div class="panel-body">
+              <!-- Manual Location Search Bar -->
+              <label style="font-size:0.78rem; color:var(--text-muted);">Enter Any City / District or
+                Coordinates:</label>
+              <div class="location-search-box">
+                <div style="position:relative; flex:1;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    style="position:absolute; left:0.6rem; top:50%; transform:translateY(-50%); color:var(--text-muted);">
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                  </svg>
+                  <input type="text" id="locationSearchInput" class="location-search-input"
+                    placeholder="e.g. Nashik, Karnal, Guntur, Patna...">
+                  <div id="searchResultsDropdown" class="search-results-dropdown"></div>
+                </div>
+                <button id="locationSearchBtn" class="btn-secondary"
+                  style="padding:0.5rem 0.85rem; font-size:0.8rem;">Search</button>
+              </div>
+
+              <!-- Indian & Global Agricultural Hubs Select -->
+              <label style="font-size:0.78rem; color:var(--text-muted); margin-top:0.75rem; display:block;">Or Select
+                Major Agricultural Hub:</label>
+              <select id="locationHubSelect" class="select-pill" style="width:100%; margin-top:0.25rem;">
+                <!-- Populated by JS -->
+              </select>
+
+              <!-- Weather Metric Display Tiles -->
+              <div class="weather-summary-box">
+                <div class="weather-metric-tile">
+                  <div class="metric-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <div id="wTemp" class="metric-val">28°C</div>
+                    <div class="metric-lbl">Temperature</div>
+                  </div>
+                </div>
+
+                <div class="weather-metric-tile">
+                  <div class="metric-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2" />
+                      <path d="M9.6 4.6A2 2 0 1 1 11 8H2" />
+                      <path d="M12.6 19.4A2 2 0 1 0 14 16H2" />
+                    </svg>
+                  </div>
+                  <div>
+                    <div id="wWind" class="metric-val">11 km/h</div>
+                    <div class="metric-lbl">Wind Speed</div>
+                  </div>
+                </div>
+
+                <div class="weather-metric-tile">
+                  <div class="metric-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <div id="wHumidity" class="metric-val">68%</div>
+                    <div class="metric-lbl">Humidity</div>
+                  </div>
+                </div>
+
+                <div class="weather-metric-tile">
+                  <div class="metric-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M4 14.89 12 3l8 11.89A7 7 0 1 1 4 14.89Z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <div id="wRainProb" class="metric-val">12%</div>
+                    <div class="metric-lbl">Rain Risk</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 3. Farm Land & Crop Profile Configurator -->
+          <section class="glass-panel">
+            <div class="panel-header">
+              <div class="panel-title">
+                <svg width="20" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2" />
+                  <path d="M3 9h18M9 21V9" />
+                </svg>
+                <span>3. My Farm & Land Profile</span>
+              </div>
+            </div>
+
+            <div class="panel-body">
+              <div class="farm-config-grid">
+                <div class="form-group">
+                  <label>Farm Location:</label>
+                  <input type="text" id="farmLocationInput" value="Nashik, Maharashtra">
+                </div>
+
+                <div class="form-group">
+                  <label>Land Size:</label>
+                  <div style="display:flex; gap:0.4rem;">
+                    <input type="number" id="farmLandSizeInput" value="5.0" step="0.5" style="width:70%;">
+                    <select id="farmLandUnitInput" style="width:30%; padding:0.4rem;">
+                      <option value="Acres">Acres</option>
+                      <option value="Hectares">Hectares</option>
+                      <option value="Bigha">Bigha</option>
+                      <option value="Guntha">Guntha</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Soil Type:</label>
+                  <select id="farmSoilSelect">
+                    <option value="Black Cotton Soil">Black Cotton Soil (Regur)</option>
+                    <option value="Alluvial Soil">Alluvial Soil</option>
+                    <option value="Red Loam">Red Loam Soil</option>
+                    <option value="Clay Soil">Clay Heavy Soil</option>
+                    <option value="Sandy Soil">Sandy Loam Soil</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Current Farming Crop:</label>
+                  <select id="farmCropSelect">
+                    <option value="Cotton">Cotton</option>
+                    <option value="Wheat">Wheat</option>
+                    <option value="Paddy Rice">Paddy Rice</option>
+                    <option value="Sugarcane">Sugarcane</option>
+                    <option value="Maize">Maize / Corn</option>
+                    <option value="Tomato">Tomato</option>
+                    <option value="Red Chilli">Red Chilli</option>
+                    <option value="Soybean">Soybean</option>
+                    <option value="Mustard">Mustard</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Water & Irrigation Source:</label>
+                  <select id="farmWaterSelect">
+                    <option value="Borewell & Drip">Borewell & Drip System</option>
+                    <option value="Canal Irrigation">Canal Water Network</option>
+                    <option value="Rainfed Monsoon">Rainfed (Monsoon Only)</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Farming Season:</label>
+                  <select id="farmSeasonSelect">
+                    <option value="Kharif (Monsoon)">Kharif (Monsoon Season)</option>
+                    <option value="Rabi (Winter)">Rabi (Winter Season)</option>
+                    <option value="Zaid (Summer)">Zaid (Summer Season)</option>
+                  </select>
+                </div>
+              </div>
+
+              <button id="saveFarmProfileBtn" class="btn-primary" style="width:100%;">
+                <span>Save Profile & Update Next Crop Recommendations</span>
+              </button>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- RIGHT COLUMN: AI DIAGNOSIS, SAFETY WINDOW & CROP RECOMMENDATIONS -->
+        <div class="results-column">
+
+          <!-- Initial Empty State -->
+          <div id="emptyStateAdvisory" class="glass-panel empty-advisory-state">
+            <div class="empty-state-icon pulse">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+              </svg>
+            </div>
+            <h3 style="font-size:1.3rem; margin-bottom:0.4rem;">No Crop Diagnosis Rendered</h3>
+            <p style="font-size:0.9rem; max-width:440px;">Take a live camera snapshot or select a preset sample from the
+              left panel to generate instant agronomic diagnosis and weather action safety windows.</p>
+          </div>
+
+          <!-- Full Diagnostic Advisory Output Container (Hidden by default) -->
+          <div id="advisoryContentArea" style="display:none; flex-direction:column; gap:1.25rem;">
+
+            <!-- 1. AI Crop Diagnosis Card -->
+            <section class="glass-panel">
+              <div class="panel-header">
+                <div class="panel-title">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                    <polyline points="22 4 12 14.01 9 11.01" />
+                  </svg>
+                  <span>AI Crop Diagnostic Report</span>
+                </div>
+                <span id="diagSeverityBadge" class="severity-tag severity-critical">CRITICAL</span>
+              </div>
+
+              <div class="panel-body">
+                <div class="diagnosis-banner-header">
+                  <div class="disease-title-box">
+                    <h3 id="diagDiseaseName">Late Blight Fungus</h3>
+                    <div id="diagScientificName" class="disease-scientific">Phytophthora infestans • Crop: <span
+                        id="diagCropTitle">Tomato</span></div>
+                  </div>
+                  <div style="text-align:right;">
+                    <span style="font-size:0.75rem; color:var(--text-muted);">AI Confidence</span>
+                    <div id="diagConfidenceVal" style="font-weight:800; font-size:1.2rem; color:var(--primary-400);">94%
+                    </div>
+                  </div>
+                </div>
+
+                <div class="confidence-meter">
+                  <div class="confidence-bar-bg">
+                    <div id="diagConfidenceBar" class="confidence-bar-fill" style="width: 94%;"></div>
+                  </div>
+                </div>
+
+                <!-- Audio Spoken Advisory Bar -->
+                <div class="audio-advisory-card" style="margin-top:1.25rem;">
+                  <div class="audio-controls-left">
+                    <button id="playAudioBtn" class="btn-play-audio" title="Listen to Advisory Aloud">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <polygon points="5 3 19 12 5 21 5 3" />
+                      </svg>
+                    </button>
+                    <div>
+                      <div class="audio-info-title">Listen to Spoken Advisory</div>
+                      <div class="audio-info-sub">Voice audio broadcast for field farmers</div>
+                    </div>
+                  </div>
+                  <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">WEB SPEECH AUDIO</span>
+                </div>
+
+                <!-- Treatment Plan Section Tabs -->
+                <div style="margin-top:1rem;">
+                  <div class="treatment-tabs">
+                    <button id="tabOrganic" class="tab-btn active">🌿 Organic Eco-Friendly Treatment</button>
+                    <button id="tabChemical" class="tab-btn">🧪 Chemical Curative Treatment</button>
+                  </div>
+                  <div id="treatmentStepsList" class="treatment-step-list">
+                    <!-- Populated by JS -->
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- 2. Weather Action Safety Index ("When to Act") -->
+            <section class="glass-panel">
+              <div class="panel-header">
+                <div class="panel-title">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                  <span>Weather Action Safety Window ("When to Act")</span>
+                </div>
+              </div>
+
+              <div class="panel-body">
+                <div class="safety-meter-box">
+                  <div id="safetyBannerBox" class="safety-header-banner">
+                    <div>
+                      <div id="safetyStatusTitle" class="safety-status-title">Action Status: OPTIMAL</div>
+                      <div id="safetyStatusDesc" style="font-size:0.83rem; color:var(--text-main); margin-top:0.2rem;">
+                        Safe to spray today between 07:00 and 11:00 AM. Low rain risk (&lt;15%) and steady wind.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style="font-size:0.8rem; font-weight:700; color:var(--text-muted); margin-top:0.5rem;">24-HOUR
+                    ACTION TIMELINE FORECAST:</div>
+                  <div id="weatherTimelineContainer" class="timeline-hours-scroll">
+                    <!-- Populated by JS -->
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- 3. Livelihood & Economic Impact Calculator (Dynamic Local Currency) -->
+            <section class="glass-panel">
+              <div class="panel-header">
+                <div class="panel-title">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="1" x2="12" y2="23" />
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                  </svg>
+                  <span>Livelihood & Yield Savings Impact (Local Currency)</span>
+                </div>
+              </div>
+
+              <div class="panel-body">
+                <div class="economic-impact-grid">
+                  <div class="eco-metric-card">
+                    <div id="ecoLossVal" class="eco-val danger">₹1,20,350 / acre</div>
+                    <div class="eco-lbl">Est. Loss Without Action</div>
+                  </div>
+
+                  <div class="eco-metric-card">
+                    <div id="ecoSavedVal" class="eco-val">₹1,05,908 / acre</div>
+                    <div class="eco-lbl">Harvest Income Saved</div>
+                  </div>
+
+                  <div class="eco-metric-card">
+                    <div id="ecoRoiVal" class="eco-val">30.3x ROI</div>
+                    <div class="eco-lbl">Treatment ROI Value</div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+          </div>
+
+          <!-- 4. AI Next Crop Recommendation Engine Card -->
+          <section class="glass-panel">
+            <div class="panel-header">
+              <div class="panel-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2a10 10 0 0 1 10 10c0 5.5-4.5 10-10 10S2 17.5 2 12A10 10 0 0 1 12 2z" />
+                  <path d="M12 6v12" />
+                  <path d="M8 10l4-4 4 4" />
+                </svg>
+                <span>AI Next Season Crop Rotation Advisor</span>
+              </div>
+              <span style="font-size:0.75rem; color:var(--primary-400); font-weight:bold;">Land & Soil Matched</span>
+            </div>
+
+            <div class="panel-body">
+              <p style="font-size:0.83rem; color:var(--text-muted); margin-bottom:0.75rem;">
+                Based on your land size, soil type, location, and current crop, our agronomic engine recommends the best
+                high-profit rotation crops to fix nitrogen and prevent pest monoculture:
+              </p>
+
+              <div id="nextCropRecsContainer" class="crop-recs-grid">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+
+  <!-- LIVE CAMERA SNAPSHOT MODAL -->
+  <div id="cameraModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <strong style="font-size:0.95rem;">Live Camera Leaf Snapshot</strong>
+        <button id="closeCamBtn" class="icon-btn-sm" style="width:24px; height:24px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body" style="text-align:center;">
+        <div style="position:relative; width:100%; height:280px; background:#000; border-radius:12px; overflow:hidden;">
+          <video id="cameraVideoStream" style="width:100%; height:100%; object-fit:cover;" autoplay playsinline
+            muted></video>
+          <canvas id="cameraCanvas" style="display:none;"></canvas>
+        </div>
+        <div style="display:flex; justify-content:center; gap:0.75rem; margin-top:1rem;">
+          <button id="flipCamBtn" class="btn-secondary" style="padding:0.6rem 1rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21.5 2v6h-6M2.5 22v-6h6" />
+              <path d="M2 11.5a10 10 0 0 1 18.8-4.3L21.5 8M22 12.5a10 10 0 0 1-18.8 4.2L2.5 16" />
+            </svg>
+            <span>Flip Front/Rear</span>
+          </button>
+          <button id="captureCamBtn" class="btn-primary" style="padding:0.6rem 1.4rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+            <span>Capture & Diagnose</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Action Button for AgriChat AI -->
+  <button id="fabChatBtn" class="fab-chat-btn" title="Open AgriAssistant Chat">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+    </svg>
+  </button>
+
+  <!-- AgriChat AI Floating Assistant Drawer -->
+  <div id="chatDrawer" class="chat-drawer">
+    <div class="chat-header">
+      <div style="display:flex; align-items:center; gap:0.5rem;">
+        <div
+          style="width:28px; height:28px; border-radius:50%; background:var(--primary-600); display:flex; align-items:center; justify-content:center; color:#fff; font-size:0.8rem; font-weight:bold;">
+          AI</div>
+        <div>
+          <div style="font-weight:700; font-size:0.9rem;">AgriChat AI Assistant</div>
+          <div style="font-size:0.7rem; color:var(--primary-400);">Real-Time Agronomist</div>
+        </div>
+      </div>
+      <button id="chatCloseBtn" class="icon-btn-sm" style="width:24px; height:24px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </div>
+
+    <div id="chatMessagesBody" class="chat-messages-body">
+      <div class="chat-msg bot">
+        Namaste! I'm your AI Agronomist. Ask me any follow-up questions about spray dosages, irrigation advice, or
+        fertilizer management!
+      </div>
+    </div>
+
+    <div
+      style="padding:0.5rem 0.75rem; display:flex; gap:0.4rem; overflow-x:auto; border-top:1px solid var(--border-glass);">
+      <button class="chat-chip control-btn" style="font-size:0.7rem; padding:0.25rem 0.5rem; white-space:nowrap;">How to
+        dilute spray?</button>
+      <button class="chat-chip control-btn"
+        style="font-size:0.7rem; padding:0.25rem 0.5rem; white-space:nowrap;">Irrigation advice</button>
+      <button class="chat-chip control-btn"
+        style="font-size:0.7rem; padding:0.25rem 0.5rem; white-space:nowrap;">Organic neem spray</button>
+    </div>
+
+    <div class="chat-input-area">
+      <input type="text" id="chatInput" placeholder="Ask your agronomy question...">
+      <button id="sendChatBtn" class="btn-primary" style="padding:0.5rem 0.9rem;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="22" y1="2" x2="11" y2="13" />
+          <polygon points="22 2 15 22 11 13 2 9 22 2" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Field Scan History Drawer -->
+  <div id="historyDrawer" class="chat-drawer" style="right:auto; left:20px; width:340px;">
+    <div class="chat-header">
+      <strong style="font-size:0.95rem;">Field Scan History Log</strong>
+      <button id="historyCloseBtn" class="icon-btn-sm" style="width:24px; height:24px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </div>
+    <div id="historyListContainer" class="chat-messages-body">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+
+</html>
